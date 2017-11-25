@@ -1,0 +1,11 @@
+.Heading{
+    text-align: center;
+    color: #124512;
+    padding: 40px 40px 40px 40px;
+}
+.body{
+    text-align: center;
+}
+body{
+    background-color: #e2e2e2;
+}

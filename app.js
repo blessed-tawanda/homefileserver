@@ -20,18 +20,28 @@ app.get('/download', function(req,res){
 
 app.post('/upload',function(req,res){
     if(req.files){
+        //var nameOfFile;
         var file = req.files.filename;
-        var nameOfFile;
-        for(var i = 0; i< file.length; i++)
-        {
-           nameOfFile = file[i].name;
-           file[i].mv("./Uploaded/"+nameOfFile,function(err){
-                if(err){
-                    console.log(err);
-                    res.send("An error occured")
-                }
-            })
-        }
-        res.send("Done Upload Complete")
+        console.log(file)
+        // if(file.length==undefined){
+        //     nameOfFile = file.name;
+        //     file.mv("./Uploaded/"+nameOfFile,function(err){
+        //          if(err){
+        //              console.log(err);
+        //              res.send("An error occured")
+        //          }
+        //      })
+        // }
+        // for(var i = 0; i< file.length; i++)
+        // {
+        //    nameOfFile = file[i].name;
+        //    file[i].mv("./Uploaded/"+nameOfFile,function(err){
+        //         if(err){
+        //             console.log(err);
+        //             res.send("An error occured")
+        //         }
+        //     })
+        // }
+        // res.send("Done Upload Complete")
     }
 })

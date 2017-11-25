@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'AdventPro-Light';
+  src: url('AdventPro-Light.eot');
+  src: url('AdventPro-Light.woff2') format('woff2'),
+       url('AdventPro-Light.woff') format('woff'),
+       url('AdventPro-Light.ttf') format('truetype'),
+       url('AdventPro-Light.svg#AdventPro-Light') format('svg'),
+       url('AdventPro-Light.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+

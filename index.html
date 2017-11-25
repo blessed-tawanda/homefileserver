@@ -4,24 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <script src="/js/jquery.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="/css/fileinput.min.css">
-    <script src="/js/fileinput.min.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/bttn.min.css">
     <title>Files Thingy</title>
 </head>
 <body>
-    <div class="Heading">
-        <h1>Welcome To WoodyKeep</h1>
-        <h2>Where you upload your files for safe keeping</h2>
+    <div class="jumbotron container text-center">
+        <p class="title">Welcome To FileKip</p>
+        <hr length="3px" color="black"> 
+        <p>Place to upload your files for safe keeping and later use</p>
     </div>
-    <div class="body">
-        <form action="/upload" enctype="multipart/form-data" method="post">
-            <input id="input-b3" name="files" type="file" class="file" multiple data-show-upload="false" data-show-caption="false" data-msg-placeholder="Select {files} for upload...">
-            <button type="submit"> Upload Data </button>
-        </form>
+    <div class="container text-center col-lg-4 col-sm-4 col-sm-offset-4 col-lg-offset-4 body">
+        <p class="heading1" >Select Operation</h1>
+
+        <p><a href="/upload" class="bttn-float bttn-md bttn-primary " role="button">Upload Files</a></p>
+        <hr color="black">
+        <p><a href="/download" class="bttn-float bttn-md bttn-primary " role="button">Download Files</a></p>
     </div>
+
 </body>
 </html>

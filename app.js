@@ -21,15 +21,17 @@ app.get('/download', function(req,res){
 app.post('/upload',function(req,res){
     if(req.files){
         var file = req.files.filename;
-        var filename = file.name;
-        file.mv("./Uploaded/"+filename,function(err){
-            if(err){
-                console.log(err);
-                res.send("An error occured")
-            }
-            else{
-                res.send("Done Upload Complete")
-            }
-        })
+        var nameOfFile;
+        for(var i = 0; i< file.length; i++)
+        {
+           nameOfFile = file[i].name;
+           file[i].mv("./Uploaded/"+nameOfFile,function(err){
+                if(err){
+                    console.log(err);
+                    res.send("An error occured")
+                }
+            })
+        }
+        res.send("Done Upload Complete")
     }
 })

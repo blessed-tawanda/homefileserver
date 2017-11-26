@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/bttn.min.css">
+    <script src="/js/jquery-3.2.1.min.js"></script>
     <title>Files Thingy</title>
 </head>
 <body>
@@ -20,8 +21,17 @@
 
         <p><a href="/upload" class="bttn-float bttn-md bttn-primary " role="button">Upload Files</a></p>
         <hr color="black">
-        <p><a href="/download" class="bttn-float bttn-md bttn-primary " role="button">Download Files</a></p>
+        <p><button id="download"class="bttn-float bttn-md bttn-primary " role="button">Download Files</button></p>
     </div>
-
 </body>
+
+<script>
+    $(document).ready(function(){ 
+        $('#download').on('click',function(){
+            $("body").load('/download')
+        })
+    })
+</script>
+
+
 </html>

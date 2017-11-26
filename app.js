@@ -1,7 +1,20 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var expressFileUpload = require('express-fileupload');
+var fs = require('fs');
+var ejs = require('ejs');
 //var fileDownloader = require('file-downloader');
+app.use('view-engine','ejs')
+fs.readdir(__dirname+'/Uploaded/',function(err,files){
+    if(err)
+    {
+        console.log(err);
+    }
+    else{
+        var listOfFiles = files;
+        console.log(files)
+    }
+})
 
 var app = express();
 app.use('/',express.static(__dirname+'/public'))
@@ -20,6 +33,10 @@ app.get('/upload', function(req,res){
 
 app.get('/download',function(req,res){
     res.sendFile(__dirname+'/download.html')
+})
+
+app.get('/download/:filename',function(req,res){
+    res.download(__dirname+'/Uploaded/---Assassin’s Creed Unity New Cinematic Trailer - Arno Master Assassin Movie Scene (2014) HD.mp4')
 })
 
 app.post('/upload',function(req,res){
@@ -55,3 +72,4 @@ app.post('/upload',function(req,res){
     }
     }
 })
+

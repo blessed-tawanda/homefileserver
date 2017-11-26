@@ -26,16 +26,22 @@ app.post('/upload',function(req,res){
     if(req.files){
         var nameOfFile;
         var file = req.files.filename;
-        if(file.length==undefined){
+        if(file==undefined){
+            res.redirect(req.get('referer'))
+        }
+        else if(file.length==undefined){
             nameOfFile = file.name;
             file.mv("./Uploaded/"+nameOfFile,function(err){
                  if(err){
                      console.log(err);
                      res.send("An error occured")
                  }
+                 else{
+                    res.send("Done Upload Complete")  
+                 }
              })
         }
-        for(var i = 0; i< file.length; i++)
+        else {for(var i = 0; i< file.length; i++)
         {
            nameOfFile = file[i].name;
            file[i].mv("./Uploaded/"+nameOfFile,function(err){
@@ -46,5 +52,6 @@ app.post('/upload',function(req,res){
             })
         }
         res.send("Done Upload Complete")
+    }
     }
 })

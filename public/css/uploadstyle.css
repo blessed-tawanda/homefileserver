@@ -10,3 +10,14 @@ div.body{
 .jumbotron{
     font-size: 2em;
 }
+
+a:hover{
+    text-decoration-color: none;
+    text-decoration-line: none;
+    text-decoration-style: none;
+    text-decoration: none;
+    -moz-text-decoration: none;
+    -moz-text-decoration-color: none;
+    -moz-text-decoration-line: none;
+    -moz-text-decoration-style: none;
+}

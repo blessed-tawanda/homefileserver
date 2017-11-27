@@ -3,8 +3,9 @@ var bodyParser = require('body-parser');
 var expressFileUpload = require('express-fileupload');
 var fs = require('fs');
 var ejs = require('ejs');
+var app = express();
 //var fileDownloader = require('file-downloader');
-app.use('view-engine','ejs')
+app.set('view engine','ejs')
 fs.readdir(__dirname+'/Uploaded/',function(err,files){
     if(err)
     {
@@ -16,7 +17,7 @@ fs.readdir(__dirname+'/Uploaded/',function(err,files){
     }
 })
 
-var app = express();
+
 app.use('/',express.static(__dirname+'/public'))
 app.listen(3000)
 //'127.34.12.3 tawanda
@@ -24,7 +25,8 @@ app.use(expressFileUpload());
 console.log('Listening');
 
 app.get('/', function(req,res) {
-    res.sendFile(__dirname+"/index.html");
+    //res.sendFile(__dirname+"/index.html");
+    res.render('index'); 
 });
 
 app.get('/upload', function(req,res){
@@ -40,6 +42,7 @@ app.get('/download/:filename',function(req,res){
 })
 
 app.post('/upload',function(req,res){
+    console.log('Recieving files')
     if(req.files){
         var nameOfFile;
         var file = req.files.filename;
@@ -54,7 +57,7 @@ app.post('/upload',function(req,res){
                      res.send("An error occured")
                  }
                  else{
-                    res.send("Done Upload Complete")  
+                    res.json({progress: 'done'})  
                  }
              })
         }

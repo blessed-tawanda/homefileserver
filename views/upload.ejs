@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Upload A File</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/uploadstyle.css">
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/popper.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/fileinput.min.css">
+    <script src="/js/fileinput.min.js"></script>
+    <link rel="stylesheet" href="/css/bttn.min.css">
+</head>
+<body>
+    <div class="jumbotron container text-center" >
+        <p>Please Select File(s) To Upload</p>
+    </div>
+    <div class="body container col-lg-6 col-lg-offset-3 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4 text-center ">
+        <form id="uploadform" action="/upload" enctype="multipart/form-data" method="post">
+            <input id="input-b3" name="filename" type="file" class="file" multiple data-show-preview="true" data-show-upload="false" data-show-caption="false" data-msg-placeholder="Select {files} for upload...">
+            <br>
+            <button id="upload" class="bttn-float bttn-md bttn-primary float-right" type=""> Upload My Files </button>
+        </form>
+        <a href="/" class="bttn-float bttn-md bttn-danger float-left"> Back </a>
+        <div>
+
+        </div>
+    </div> 
+</body>
+<script>
+    $(document).ready(function(){
+        $("#upload").on('click',function(){
+            $.ajax({
+                type: 'POST',
+                url: '/upload',
+                data: $('#upload').serialize(),
+                success: function(data){
+                    alert(data.progress)
+                }
+            })
+        })
+    })
+
+
+</script>
+
+</html>

@@ -55,17 +55,73 @@ app.get('/download/:filename',function(req,res){
 app.post('/upload',function(req,res){
     console.log("upload process fired")
     var nameOfFile;
+    var filetype;
     var file = req.files.file;
     nameOfFile = file.name;
-    
-    file.mv("./Uploaded/"+nameOfFile,function(err){
-        if(err){
-            console.log(err); 
-            res.send("An error occured")
-        }
-        else{
-            res.send("Upload Complete")  
-        }
-    })
+    fileType = file.mimetype;
+    // using Regular Expressions to upload files according to thier file type genre
+    var reVideos = /video/;
+    var reApp = /application/;
+    var reAudio = /audio/;
+    var reImage = /image/;
+    if(reVideos.test(fileType)){
+        console.log("its a video");
+        file.mv("./Uploaded/Video/"+nameOfFile,function(err){
+            if(err){
+                console.log(err); 
+                res.send("An error occured")
+            }
+            else{
+                res.send("Upload Complete")  
+            }
+        })
+
+    }
+    if(reApp.test(fileType)){
+        console.log("its misc");
+        file.mv("./Uploaded/Misc/"+nameOfFile,function(err){
+            if(err){
+                console.log(err); 
+                res.send("An error occured")
+            }
+            else{
+                res.send("Upload Complete")  
+            }
+        })
+    }
+    if(reAudio.test(fileType)){
+        console.log("its audio")
+        file.mv("./Uploaded/Audio/"+nameOfFile,function(err){
+            if(err){
+                console.log(err); 
+                res.send("An error occured")
+            }
+            else{
+                res.send("Upload Complete")  
+            }
+        })
+    }
+    if(reImage.test(fileType)){
+        console.log("its an image")
+        file.mv("./Uploaded/Images/"+nameOfFile,function(err){
+            if(err){
+                console.log(err); 
+                res.send("An error occured")
+            }
+            else{
+                res.send("Upload Complete")  
+            }
+        })
+    }
+
+    // file.mv("./Uploaded/"+nameOfFile,function(err){
+    //     if(err){
+    //         console.log(err); 
+    //         res.send("An error occured")
+    //     }
+    //     else{
+    //         res.send("Upload Complete")  
+    //     }
+    // })
 })
 

@@ -5,8 +5,6 @@ var fs = require('fs');
 var ejs = require('ejs');
 var morgan = require('morgan');
 var app = express();
-//app.use(morgan('combined'))
-//var fileDownloader = require('file-downloader');
 app.set('view engine','ejs')
 var listOfFiles;
 function getFileList(){ // function used to get the list of files on server
@@ -64,6 +62,7 @@ app.post('/upload',function(req,res){
     var reApp = /application/;
     var reAudio = /audio/;
     var reImage = /image/;
+    
     if(reVideos.test(fileType)){
         console.log("its a video");
         file.mv("./Uploaded/Video/"+nameOfFile,function(err){
@@ -114,14 +113,5 @@ app.post('/upload',function(req,res){
         })
     }
 
-    // file.mv("./Uploaded/"+nameOfFile,function(err){
-    //     if(err){
-    //         console.log(err); 
-    //         res.send("An error occured")
-    //     }
-    //     else{
-    //         res.send("Upload Complete")  
-    //     }
-    // })
 })
 

@@ -4,23 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/downloadstyle.css">
-    <link rel="stylesheet" href="/css/bttn.min.css">
-    <title>Download Your Files</title>
+    <title>FileKip|Download</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
 <body>
-        <div class="jumbotron container text-center" >
-                <p class="title">Please select file to download</p>
+    <div class="container-fluid">
+        <h1>FileKip</h1>
+        <div>
+        <ul class="nav nav-pills nav-fill">
+        <li class="nav-item " >
+            <a class="nav-link" href="/">Uploads</a>
+        </li>
+        <li class="nav-item activated">
+            <a class="nav-link" href="/download">Downloads</a>
+        </li>
+        </ul>
         </div>
-        <div class="container well body">
-            <p class="heading1" > List of Files On server </p>
+        <div class="dl">
             <%filelist.forEach(function(item){%>
-            <ul class="filelist">
-                <li> <a href="/download/<%=item%>"><%=item%></a>  </li>
-            </ul>
-        <%})%>
-            
+                <ul class="filelist">
+                    <li> <a href="/download/<%=item%>"><%=item%></a>  </li>
+                </ul>
+            <%})%>
         </div>
+    </div>
+
 </body>
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/popper.js"></script>
+<script src="js/bootstrap.min.js"></script>
 </html>

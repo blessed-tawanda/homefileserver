@@ -5,7 +5,7 @@ var fs = require('fs');
 var ejs = require('ejs');
 var morgan = require('morgan');
 var app = express();
-app.use(morgan('combined'))
+//app.use(morgan('combined'))
 //var fileDownloader = require('file-downloader');
 app.set('view engine','ejs')
 var listOfFiles;
@@ -25,13 +25,15 @@ function getFileList(){ // function used to get the list of files on server
 getFileList();
 app.use('/',express.static(__dirname+'/public'))
 app.listen(3000)
-//'127.34.12.3 tawanda
-app.use(expressFileUpload());
 console.log('Listening');
 
+app.use(expressFileUpload());
+
+
 app.get('/', function(req,res) {
-    //res.sendFile(__dirname+"/index.html");
-    res.render('index'); 
+    //entrace point "home page"
+    res.sendFile(__dirname+"/index.html");
+    // res.render('index'); 
 });
 
 app.get('/upload', function(req,res){
@@ -51,47 +53,19 @@ app.get('/download/:filename',function(req,res){
 })
 
 app.post('/upload',function(req,res){
-    if(req.files){
-        var nameOfFile;
-        var file = req.files.filename;
-        if(file==undefined){
-            res.redirect(req.get('referer'))
+    console.log("upload process fired")
+    var nameOfFile;
+    var file = req.files.file;
+    nameOfFile = file.name;
+    
+    file.mv("./Uploaded/"+nameOfFile,function(err){
+        if(err){
+            console.log(err); 
+            res.send("An error occured")
         }
-        else if(file.length==undefined){
-            nameOfFile = file.name;
-            file.mv("./Uploaded/"+nameOfFile,function(err){
-                 if(err){
-                     console.log(err);
-                     res.send("An error occured")
-                 }
-                 else{
-                    res.json({progress: 'done'})  
-                 }
-             })
+        else{
+            res.send("Upload Complete")  
         }
-        else {for(var i = 0; i< file.length; i++)
-        {
-           nameOfFile = file[i].name;
-           file[i].mv("./Uploaded/"+nameOfFile,function(err){
-                if(err){
-                    console.log(err);
-                    res.send("An error occured")
-                }
-            })
-        }
-        res.send("Done Upload Complete")
-    }
-    }
-    fs.readdir(__dirname+'/Uploaded/',function(err,files){
-        if(err)
-            {console.log(err);}
-        else
-            {listOfFiles = files;
-                // get the size of file ;) for later consumption :(
-                // fs.stat(__dirname+'/Uploaded/'+listOfFiles[0],function(err,stats){
-                //     console.log(stats.size)
-                // })
-            }
-    })    
+    })
 })
 

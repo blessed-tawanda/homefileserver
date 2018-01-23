@@ -1,54 +1,121 @@
 body{
-    background-color: #3a6a72;
+	font-family: monospace;
+}
+a.nav-link{
+	color: black;
+	text-decoration: none;
+	padding: 5px 20px;
+}
+a.nav-link:hover{
+	color: white;
+	text-decoration: none;
+	padding: 5px 20px;
+	transition: all 0.67s ease-in
+}
+.activated a{
+	color: white;
+	background-color: black;
+	border-style: solid;
+	border-width: 0px;
+	border-radius: 0px;
+	border-color: black;
+}
+.green{
+	color: white;
+	background-color: green;
+	transition: all 0.67s ease-in;
 }
 
-div.heading{
-    background-color: #999;
-    display: flex;
-    flex: 1 1 0;
-    color: #121;
-    font-size: 2em;
-    justify-content: center; 
-   
+.bg-black{
+	background-color: black;
+}
+.output{
+	color: black;
+	font-size: 30px;
+	text-align: center
+}
+.nav-item {
+	color: black;
+	text-decoration: none;
+	font-family: "Roboto",sans-serif;
+	font-size: 15px;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 0px;
+	border-color: black;
+	background-color: white;
+}
+.nav-item:hover{
+	color: white;
+	background-color: black;
+	transition: all 0.67s ease-in
+}
+.nav-item .active {
+	color: white;
+	background-color: black;
+	
+}
+.nav-link a.active{
+	color: white;
+	background-color: black;
+}
+/* heading */
+h1{
+	color: black;
+	text-transform: uppercase;
+	font-size: 80px;
+	text-align: center;
+	margin-top: 1%;
+	}
+/* progress header */
+h2{
+	color: black;
+	font-size: 30px;
+	text-align: center;
+
+}
+/* summary for operation */
+p{
+	padding: 10px;
+	color: black;
+	font-size: 23px;
+	text-align: center;
+	
 }
 
-a:hover{
-    text-decoration: none;
+/* class for file input element */
+.europa{
+	padding: 8px;
+	color: black;
+	background-color: white;
+	font-size: 12px;
+	border: 1px solid black;
+}
+.earth{
+	text-align: center;
+}
+.btn{
+	border-radius: 0px;
+	border: 1px solid black;
+	padding: 10px 30px;
+	color: black;
+	margin-top: 11px;
+	font-size: 12px;
+	text-transform: uppercase;
+	background-color: white;
+}
+.btn:hover{
+	color: white;
+	background-color: black;
+	transition: all 0.67s ease-in;
 }
 
-div.title{
-    display: flex;
-    justify-content: center;
-    background-color: #666;
-    flex-wrap: wrap;
-}
-
-nav{
-    background-color: #444;
-}
-
-nav ul{
-    display: flex; 
-    list-style: none;
-    padding: 0;
-    justify-content: center;
-}
-
-nav li{
-    text-decoration: none;
-    color: #fff;
-    display: block;
-    padding: 10px;
-    flex: 1 1 0;
-    text-align: center;
-
-}
-
-nav li:hover{
-    background-color: #999;
-    cursor: pointer;
-}
-
-.active{
-    background-color: #999;
+.dl{
+	margin-top: 4px;
+	padding: 8px;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 0px;
+	border-color: black;
+	
 }

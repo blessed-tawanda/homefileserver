@@ -7,12 +7,18 @@
     <title>Upload A File</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/uploadstyle.css">
+    <link rel="stylesheet" href="/css/fileinput.min.css">
+    <link rel="stylesheet" href="/css/bttn.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.css" media="all">
     <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/plugins/sortable.js" type="text/javascript"></script>
+    <script src="/js/fileinput.js" type="text/javascript"></script>
+    <script src="/js/locales/fr.js" type="text/javascript"></script>
+    <script src="/js/locales/es.js" type="text/javascript"></script>
+    <script src="/themes/explorer-fa/theme.js" type="text/javascript"></script>
+    <script src="/themes/fa/theme.js" type="text/javascript"></script>
     <script src="/js/popper.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="/css/fileinput.min.css">
-    <script src="/js/fileinput.min.js"></script>
-    <link rel="stylesheet" href="/css/bttn.min.css">
 </head>
 <body>
     <div class="jumbotron container text-center" >
@@ -25,23 +31,52 @@
             <button id="upload" class="bttn-float bttn-md bttn-primary float-right" type=""> Upload My Files </button>
         </form>
         <a href="/" class="bttn-float bttn-md bttn-danger float-left"> Back </a>
-        <div>
-
+        <br>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="100">
+                <span class="sr-only">  % Complete</span>
+            </div>
         </div>
     </div> 
 </body>
 <script>
     $(document).ready(function(){
-        $("#upload").on('click',function(){
+        $("#uploadform").submit(function(e){
+            e.preventDefault();
+            var formData = new FormData($('#uploadform'))
             $.ajax({
+                xhr: function(){ 
+                    var xhr = new window.XMLHttpRequest();
+                    xhr.upload.addEventListener('progress', function(e){
+                            console.log(e.loaded);
+                            console.log(e.total);   
+                        
+                    });
+                    return xhr;
+                },
                 type: 'POST',
                 url: '/upload',
-                data: $('#upload').serialize(),
-                success: function(data){
-                    alert(data.progress)
-                }
+                data: formData,
+                //data: $('#upload').serialize(),
+                //success: alert('WAwaw')
             })
         })
+        // $('#uploadform').submit(function(e){
+        //     if($('#input-b3').val()){
+        //         e.preventDefault();
+        //         $.ajax({
+        //             beforeSubmit: function(){
+        //                 $('.prograss-bar').width('0%');
+        //             },
+        //             uploadProgress: function(event,postion,total,percentComplete){
+        //                 $('.progress-bar').width(percentComplete+'%');
+        //                 $('.progress-bar').html('<div id="progress-status">'+percentComplete+'%</div>')
+        //             },
+        //             resetForm: true
+        //         })
+        //     }
+        // })
+        
     })
 
 

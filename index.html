@@ -1,36 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/bttn.min.css">
-    <script src="/js/jquery-3.2.1.min.js"></script>
-    <title>Files Thingy</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>FileKip</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
 <body>
-    <div class="heading">
-        <p>
-            FileKip
-        </p>
+  <div class="container-fluid">
+    <h1>FileKip</h1>
+  <div>
+    <ul class="nav nav-pills nav-fill">
+      <li class="nav-item activated" >
+        <a class="nav-link" href="/">Uploads</a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" href="/download">Downloads</a>
+        </li>
+    </ul>
+  </div>
+<div class="titan">
+  <p>Select a file to upload</p>
+  <form role="form" onsubmit="return false">
+    <div class="earth">
+      <input class="europa" id="file" type="file">
     </div>
-    <div class="container text-center col-lg-4 col-sm-4 col-sm-offset-4 col-lg-offset-4 body">
-        <p class="heading1" >Select Operation</h1>
-
-        <p><a href="/upload" class="bttn-float bttn-md bttn-primary " role="button">Upload Files</a></p>
-        <hr color="black">
-        <p><button id="download"class="bttn-float bttn-md bttn-primary " role="button">Download Files</button></p>
+    <div class="earth">
+  <button id="upload" type="button" class="button btn"> Upload </button>
     </div>
+</form>
+  <h2>Progress:</h2>
+  <div class="progress">
+    <div id="progressbar" class="progress-bar progress-bar-striped bg-black" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+  <div id="output"></div>
+</div>
+</div>
 </body>
-
-<script>
-    $(document).ready(function(){ 
-        $('#download').on('click',function(){
-            $("body").load('/download')
-        })
-    })
-</script>
-
-</html>
+  <script src="js/jquery-3.2.1.min.js"></script>
+  <script src="js/popper.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/axios.js"></script>
+  <script>
+      var output = document.getElementById('output');
+      var progressbar = document.getElementById('progressbar')
+      document.getElementById('upload').onclick = function(){
+        console.log("you clicked button")
+        var data = new FormData();
+        data.append('file',document.getElementById('file').files[0]);
+        var config = {
+          // this function will run during the upload process and will be fired every second during upload
+          onUploadProgress: function(progressEvent){
+            var percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total );
+            var progress = document.getElementById('progress');
+            progressbar.style.width = percentCompleted+"%";
+            progressbar.innerText = percentCompleted + '%';
+            if(percentCompleted == 100){
+              progressbar.style.backgroundColor = "green"
+              output.className = 'output'
+              output.innerText = "Processing File"
+            }
+          }
+        };
+        axios.post('/upload',data,config)
+            .then(function(res){
+              output.innerText = res.data;
+            })
+            .catch(function(err){
+              output.className = 'container text-danger';
+              output.innerText = err.message;
+            })
+      }
+  </script>
+</html

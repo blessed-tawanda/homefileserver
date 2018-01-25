@@ -7,6 +7,7 @@
     <title>FileKip|Download</title>
     <link rel="stylesheet" href="css/semantic.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="semantic/dist/semantic.css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
 <body>
@@ -22,17 +23,70 @@
         </li>
         </ul>
         </div>
-        <div class="dl">
-            <%filelist.forEach(function(item){%>
-                <ul class="filelist">
-                    <li> <a href="/download/<%=item%>"><%=item%></a>  </li>
-                </ul>
-            <%})%>
+        <div class="cards">	
+            <div class="ui four link stackable cards">
+                    <div id="video" class="card">
+                          <div class="image">
+                            <img src="img/video.png" class="visible content">
+                          </div>
+                          <div class="content">
+                            <a class="header">Video</a>
+                          </div>
+                          <div class="extra content">
+                            <a>
+                              <i class="film icon"></i>
+                              <%=video.length%> Items</a>
+                          </div>
+                    </div>
+                    <div id="audio" class="card">
+                          <div class="image">
+                            <img src="img/audio.png" class="visible content">
+                          </div>
+                          <div class="content">
+                            <a class="header">Audio</a>
+                          </div>
+                          <div class="extra content">
+                            <a>
+                              <i class="music icon"></i>
+                              <%=audio.length%> Items</a>
+                          </div>
+                    </div>	
+                    <div id="image" class="card">
+                          <div class="image">
+                            <img src="img/image.png" class="visible content">
+                          </div>
+                          <div class="content">
+                            <a class="header">Image</a>
+                          </div>
+                          <div class="extra content">
+                            <a>
+                              <i class="photo icon"></i>
+                              <%=image.length%> Items</a>
+                          </div>
+                    </div>
+                    <div id="misc" class="card">
+                          <div class="image">
+                            <img src="img/misc.png" class="visible content">
+                          </div>
+                          <div class="content">
+                            <a class="header">Misc</a>
+                          </div>
+                          <div class="extra content">
+                            <a>
+                              <i class="file outline icon"></i>
+                              <%=misc.length%> Items</a>
+                          </div>
+                    </div>
+            </div>
         </div>
     </div>
 </body>
 <script src="js/jquery-3.2.1.min.js"></script>
+<script src="semantic/dist/semantic.min.js"></script>
 <script src="js/popper.js"></script>
 <script src="js/semantic.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script>
+        
+</script>
 </html>

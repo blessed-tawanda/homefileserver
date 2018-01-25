@@ -6,21 +6,50 @@ var ejs = require('ejs');
 var morgan = require('morgan');
 var app = express();
 app.set('view engine','ejs')
-var listOfFiles;
-function getFileList(){ // function used to get the list of files on server
-    fs.readdir(__dirname+'/Uploaded/',function(err,files){
+
+var listOfVideos;
+var listOfAudio;
+var listOfImages;
+var listOfMisc;
+
+function getVideoFileList(){ // function used to get the list of files on server
+    fs.readdir(__dirname+'/Uploaded/Video',function(err,files){
         if(err)
             {console.log(err);}
         else
-            {listOfFiles = files;
-                // get the size of file ;) for later consumption :(
-                // fs.stat(__dirname+'/Uploaded/'+listOfFiles[0],function(err,stats){
-                //     console.log(stats.size)
-                // })
-            }
+            {listOfVideos = files;}
     })    
 }
-getFileList();
+function getImageFileList(){ // function used to get the list of files on server
+    fs.readdir(__dirname+'/Uploaded/Images',function(err,files){
+        if(err)
+            {console.log(err);}
+        else
+            {listOfImages = files;}
+    })    
+}
+function getMiscFileList(){ // function used to get the list of files on server
+    fs.readdir(__dirname+'/Uploaded/Misc',function(err,files){
+        if(err)
+            {console.log(err);}
+        else
+            {listOfMisc = files;}
+    })    
+}
+function getAudioFileList(){ // function used to get the list of files on server
+    fs.readdir(__dirname+'/Uploaded/Audio',function(err,files){
+        if(err)
+            {console.log(err);}
+        else
+            {listOfAudio = files;}
+    })    
+}
+
+getVideoFileList();
+getAudioFileList();
+getMiscFileList();
+getImageFileList();
+
 app.use('/',express.static(__dirname+'/public'))
 app.listen(3000)
 console.log('Listening');
@@ -41,8 +70,16 @@ app.get('/upload', function(req,res){
 
 app.get('/download',function(req,res){
     //res.sendFile(__dirname+'/download.html')
-    getFileList();
-    var data = {filelist:listOfFiles};
+    getVideoFileList();
+    getAudioFileList();
+    getMiscFileList();
+    getImageFileList();
+    var data =  { 
+                   video:listOfVideos,
+                   audio:listOfAudio,
+                   image:listOfImages,
+                   misc:listOfMisc
+                };
     res.render('download', data)
 })
 

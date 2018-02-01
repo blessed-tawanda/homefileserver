@@ -1,6 +1,9 @@
 body{
 	font-family: monospace;
 }
+h1:first-child{
+	margin-top: 1%;
+}
 a.nav-link{
 	color: black;
 	text-decoration: none;
@@ -61,9 +64,11 @@ a.nav-link:hover{
 }
 /* heading */
 h1{
+	font-family: monospace;
 	color: black;
 	text-transform: uppercase;
 	font-size: 80px;
+	font-weight: normal;
 	text-align: center;
 	margin-top: 1%;
 	}

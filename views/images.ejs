@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>FileKip|Download</title>
+    <link rel="stylesheet" href="./semantic/dist/semantic.css">
+    <link rel="stylesheet" href="./css/style.css" type="text/css">
+</head>
+<body>
+  <div class="ui container">
+    <img class="ui centered image" src="img/logo.png" alt="logo" srcset="">
+  </div>
+  <div class="ui horizontal divider">
+    <i class="file icon"></i>
+  </div>
+  <div class="ui container">
+    <div class="ui secondary pointing two item menu">
+        <a class="item filemenu" href="/">
+        Upload A File
+        </a>
+        <a class="ui active item filemenu" href="/image">
+            Download A File
+        </a>
+    </div>
+    <div class="ui grid computer only">
+            <div class="four wide column">
+              <div class="ui vertical fluid tabular menu">
+                <a class="item" href="/download">Video <div class="ui blue label"> <i class="icon video"></i> <%=video.length%></div> </a>
+                <a class="active item" href="/image">Image <div class="ui blue label"> <i class="icon image"></i> <%=image.length%></div></a>
+                <a class="item" href="/audio">Audio <div class="ui blue label"> <i class="icon music"></i> <%=audio.length%></div></a>
+                <a class="item" href="/misc">Misc <div class="ui blue label"> <i class="icon file"></i> <%=misc.length%></div></a>
+              </div>
+            </div>
+            <div class="twelve wide stretched column">
+              <div class="ui segment">
+                    <div class="ui middle aligned divided list">
+                      <%image.forEach(function(item){%>   
+                      <div class="item">
+                              <div class="right floated content">
+                                <a class="ui button" href="/download/image/<%=item%>"> <i class="icon download"></i>Download</a>
+                              </div>
+                              <div class="content">
+                                <%=item%>
+                              </div>
+                      </div>
+                      <%})%>
+                    </div>
+              </div>
+            </div>
+    </div>
+</div>
+        
+</body>
+<script src="./js/jquery-3.2.1.min.js"></script>
+<script src="./semantic/dist/semantic.min.js"></script>
+
+<script>
+        
+</script>
+</html>

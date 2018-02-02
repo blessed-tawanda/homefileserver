@@ -5,86 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>FileKip|Download</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="semantic/dist/semantic.css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
 <body>
-    <div class="container-fluid">
-        <h1>FileKip</h1>
-        <div class="navigator">
-          <ul class="nav nav-pills nav-fill">
-          <li class="nav-item " >
-              <a class="nav-link" href="/">Uploads</a>
-          </li>
-          <li class="nav-item activated">
-              <a class="nav-link" href="/download">Downloads</a>
-          </li>
-          </ul>
-        </div>
-    <br>
-        <div class="cards">	
-            <div class="ui four link stackable cards">
-                    <div id="video" class="card">
-                          <div class="image">
-                            <img src="img/video.png" class="visible content">
-                          </div>
-                          <div class="content">
-                            <a class="header">Video</a>
-                          </div>
-                          <div class="extra content">
-                            <a>
-                              <i class="film icon"></i>
-                              <%=video.length%> Items</a>
-                          </div>
-                    </div>
-                    <div id="audio" class="card">
-                          <div class="image">
-                            <img src="img/audio.png" class="visible content">
-                          </div>
-                          <div class="content">
-                            <a class="header">Audio</a>
-                          </div>
-                          <div class="extra content">
-                            <a>
-                              <i class="music icon"></i>
-                              <%=audio.length%> Items</a>
-                          </div>
-                    </div>	
-                    <div id="image" class="card">
-                          <div class="image">
-                            <img src="img/image.png" class="visible content">
-                          </div>
-                          <div class="content">
-                            <a class="header">Image</a>
-                          </div>
-                          <div class="extra content">
-                            <a>
-                              <i class="photo icon"></i>
-                              <%=image.length%> Items</a>
-                          </div>
-                    </div>
-                    <div id="misc" class="card">
-                          <div class="image">
-                            <img src="img/misc.png" class="visible content">
-                          </div>
-                          <div class="content">
-                            <a class="header">Misc</a>
-                          </div>
-                          <div class="extra content">
-                            <a>
-                              <i class="file outline icon"></i>
-                              <%=misc.length%> Items</a>
-                          </div>
-                    </div>
+  <div class="ui container">
+    <img class="ui centered image" src="img/logo.png" alt="logo" srcset="">
+  </div>
+  <div class="ui horizontal divider">
+    <i class="file icon"></i>
+  </div>
+  <div class="ui container">
+    <div class="ui secondary pointing two item menu">
+        <a class="item filemenu" href="/">
+        Upload A File
+        </a>
+        <a class="ui active item filemenu" href="/download">
+            Download A File
+        </a>
+    </div>
+    <div class="ui grid computer only">
+            <div class="four wide column">
+              <div class="ui vertical fluid tabular menu">
+                <a class="active item" href="/download">Video <div class="ui blue label"> <i class="icon video"></i> <%=video.length%></div> </a>
+                <a class="item" href="/image">Image <div class="ui blue label"> <i class="icon image"></i> <%=image.length%></div></a>
+                <a class="item" href="/audio">Audio <div class="ui blue label"> <i class="icon music"></i> <%=audio.length%></div></a>
+                <a class="item" href="/misc">Misc <div class="ui blue label"> <i class="icon file"></i> <%=misc.length%></div></a>
+              </div>
             </div>
-        </div>
-      </div>
+            <div class="twelve wide stretched column">
+              <div class="ui segment">
+                    <div class="ui middle aligned divided list">
+                      <%video.forEach(function(item){%>   
+                      <div class="item">
+                              <div class="right floated content">
+                                <a class="ui button" href="/download/video/<%=item%>"> <i class="icon download"></i>Download</a>
+                              </div>
+                              <div class="content">
+                                <%=item%>
+                              </div>
+                      </div>
+                      <%})%>
+                    </div>
+              </div>
+            </div>
+    </div>
+</div>
+        
 </body>
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="semantic/dist/semantic.min.js"></script>
-<script src="js/popper.js"></script>
-<script src="js/bootstrap.min.js"></script>
+
 <script>
         
 </script>

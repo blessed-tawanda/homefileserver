@@ -17,10 +17,10 @@
   </div>
   <div class="ui container">
     <div class="ui secondary pointing two item menu">
-        <a class="active item filemenu">
+        <a class="active item filemenu" href="/">
           Upload A File
         </a>
-        <a class="ui item filemenu">
+        <a class="ui item filemenu" href="/download">
             Download A File
         </a>
     </div>
@@ -69,12 +69,14 @@
             percent: percentCompleted
             });
             if(percentCompleted == 100){
+              $('#loader').addClass("active centered")
               output.innerText = "Processing File"
             }
           }
         };
         axios.post('/upload',data,config)
             .then(function(res){
+              $('#loader').removeClass("active centered")
               output.innerText = res.data;
             })
             .catch(function(err){

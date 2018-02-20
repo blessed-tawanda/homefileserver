@@ -120,10 +120,6 @@ app.get('/misc',function(req,res){
     res.render('misc', data)
 })
 
-
-
-
-
 //download video files
 app.get('/download/video/:filename',function(req,res){
     res.download(__dirname+"/Uploaded/Video/"+req.params.filename)

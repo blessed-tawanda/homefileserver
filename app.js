@@ -5,6 +5,8 @@ var fs = require('fs');
 var ejs = require('ejs');
 var morgan = require('morgan');
 var app = express();
+//app.use(morgan('combined'))
+//var fileDownloader = require('file-downloader');
 app.set('view engine','ejs')
 
 var listOfVideos;
@@ -56,27 +58,19 @@ console.log('Listening');
 
 app.use(expressFileUpload());
 
-
 app.get('/', function(req,res) {
     //entrace point "home page"
     res.sendFile(__dirname+"/index.html");
+    // res.render('index'); 
 });
-//audio download page render
-app.get('/audio', function(req,res){
-    getVideoFileList();
-    getAudioFileList();
-    getMiscFileList();
-    getImageFileList();
-    var data =  { 
-                   video:listOfVideos,
-                   audio:listOfAudio,
-                   image:listOfImages,
-                   misc:listOfMisc
-                };
-    res.render('audio', data)
+
+app.get('/upload', function(req,res){
+    //res.sendFile(__dirname+'/upload.html');
+    res.render('upload');
 })
-// video download page render
+
 app.get('/download',function(req,res){
+    //res.sendFile(__dirname+'/download.html')
     getVideoFileList();
     getAudioFileList();
     getMiscFileList();
@@ -89,55 +83,11 @@ app.get('/download',function(req,res){
                 };
     res.render('download', data)
 })
-// image download page render
-app.get('/image',function(req,res){
-    getVideoFileList();
-    getAudioFileList();
-    getMiscFileList();
-    getImageFileList();
-    var data =  { 
-                   video:listOfVideos,
-                   audio:listOfAudio,
-                   image:listOfImages,
-                   misc:listOfMisc
-                };
-    res.render('images', data)
-})
-// misc download page render
-app.get('/misc',function(req,res){
-    getVideoFileList();
-    getAudioFileList();
-    getMiscFileList();
-    getImageFileList();
-    var data =  { 
-                   video:listOfVideos,
-                   audio:listOfAudio,
-                   image:listOfImages,
-                   misc:listOfMisc
-                };
-    res.render('misc', data)
+
+app.get('/download/:filename',function(req,res){
+    res.download(__dirname+"/Uploaded/"+req.params.filename)
 })
 
-
-
-
-
-//download video files
-app.get('/download/video/:filename',function(req,res){
-    res.download(__dirname+"/Uploaded/Video/"+req.params.filename)
-})
-//download audio files
-app.get('/download/audio/:filename',function(req,res){
-    res.download(__dirname+"/Uploaded/Audio/"+req.params.filename)
-})
-//download image files
-app.get('/download/image/:filename',function(req,res){
-    res.download(__dirname+"/Uploaded/Images/"+req.params.filename)
-})
-//download misc files
-app.get('/download/misc/:filename',function(req,res){
-    res.download(__dirname+"/Uploaded/Misc/"+req.params.filename)
-})
 app.post('/upload',function(req,res){
     console.log("upload process fired")
     var nameOfFile;
@@ -150,7 +100,6 @@ app.post('/upload',function(req,res){
     var reApp = /application/;
     var reAudio = /audio/;
     var reImage = /image/;
-    
     if(reVideos.test(fileType)){
         console.log("its a video");
         file.mv("./Uploaded/Video/"+nameOfFile,function(err){
@@ -201,5 +150,14 @@ app.post('/upload',function(req,res){
         })
     }
 
+    // file.mv("./Uploaded/"+nameOfFile,function(err){
+    //     if(err){
+    //         console.log(err); 
+    //         res.send("An error occured")
+    //     }
+    //     else{
+    //         res.send("Upload Complete")  
+    //     }
+    // })
 })
 

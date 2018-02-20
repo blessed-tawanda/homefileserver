@@ -83,9 +83,50 @@ app.get('/download',function(req,res){
                 };
     res.render('download', data)
 })
+// image download page render
+app.get('/image',function(req,res){
+    getVideoFileList();
+    getAudioFileList();
+    getMiscFileList();
+    getImageFileList();
+    var data =  { 
+                   video:listOfVideos,
+                   audio:listOfAudio,
+                   image:listOfImages,
+                   misc:listOfMisc
+                };
+    res.render('images', data)
+})
+// misc download page render
+app.get('/misc',function(req,res){
+    getVideoFileList();
+    getAudioFileList();
+    getMiscFileList();
+    getImageFileList();
+    var data =  { 
+                   video:listOfVideos,
+                   audio:listOfAudio,
+                   image:listOfImages,
+                   misc:listOfMisc
+                };
+    res.render('misc', data)
+})
 
-app.get('/download/:filename',function(req,res){
-    res.download(__dirname+"/Uploaded/"+req.params.filename)
+//download video files
+app.get('/download/video/:filename',function(req,res){
+    res.download(__dirname+"/Uploaded/Video/"+req.params.filename)
+})
+//download audio files
+app.get('/download/audio/:filename',function(req,res){
+    res.download(__dirname+"/Uploaded/Audio/"+req.params.filename)
+})
+//download image files
+app.get('/download/image/:filename',function(req,res){
+    res.download(__dirname+"/Uploaded/Images/"+req.params.filename)
+})
+//download misc files
+app.get('/download/misc/:filename',function(req,res){
+    res.download(__dirname+"/Uploaded/Misc/"+req.params.filename)
 })
 
 app.post('/upload',function(req,res){

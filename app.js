@@ -3,10 +3,8 @@ var bodyParser = require('body-parser');
 var expressFileUpload = require('express-fileupload');
 var fs = require('fs');
 var ejs = require('ejs');
-var morgan = require('morgan');
 var app = express();
-//app.use(morgan('combined'))
-//var fileDownloader = require('file-downloader');
+
 app.set('view engine','ejs')
 
 var listOfVideos;
@@ -112,8 +110,23 @@ app.get('/misc',function(req,res){
     res.render('misc', data)
 })
 
+app.get('/audio',function(req,res){
+    getVideoFileList();
+    getAudioFileList();
+    getMiscFileList();
+    getImageFileList();
+    var data =  { 
+                   video:listOfVideos,
+                   audio:listOfAudio,
+                   image:listOfImages,
+                   misc:listOfMisc
+                };
+    res.render('audio', data)
+})
+
 //download video files
 app.get('/download/video/:filename',function(req,res){
+    // console.log("downloading: " + req.params.filename)
     res.download(__dirname+"/Uploaded/Video/"+req.params.filename)
 })
 //download audio files

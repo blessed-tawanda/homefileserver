@@ -1,9 +1,31 @@
-body{
-    padding-top: 1%; 
+body {
+  padding-top: 1%;
 }
-form{
-    text-align: center
+form {
+  text-align: center;
 }
-.image{
-    height: 100px;  
+.image {
+  height: 100px;
+}
+
+.flex {
+  display: flex;
+}
+.flex-col {
+  flex-direction: column;
+}
+.items-center {
+  align-items: center;
+}
+.mr-2 {
+  margin-right: 0.5rem;
+}
+video {
+  max-height: 100px;
+}
+
+.text-elipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

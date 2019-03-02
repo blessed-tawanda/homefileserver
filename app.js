@@ -1,217 +1,118 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var expressFileUpload = require('express-fileupload');
-var fs = require('fs');
-var ejs = require('ejs');
+var express = require("express");
+var bodyParser = require("body-parser");
+var expressFileUpload = require("express-fileupload");
+var fs = require("fs");
+var ejs = require("ejs");
 var app = express();
 
-app.set('view engine','ejs')
+app.set("view engine", "ejs");
 
-var listOfVideos;
-var listOfAudio;
-var listOfImages;
-var listOfMisc;
+const listOfFiles = {
+  video: [],
+  audio: [],
+  misc: [],
+  image: []
+};
+// using Regular Expressions to upload files according to thier file type genre
 
-function getVideoFileList(){ // function used to get the list of files on server
-    fs.readdir(__dirname+'/Uploaded/Video',function(err,files){
-        if(err)
-            {console.log(err);}
-        else
-            {listOfVideos = files;}
-    })    
-}
-function getImageFileList(){ // function used to get the list of files on server
-    fs.readdir(__dirname+'/Uploaded/Images',function(err,files){
-        if(err)
-            {console.log(err);}
-        else
-            {listOfImages = files;}
-    })    
-}
-function getMiscFileList(){ // function used to get the list of files on server
-    fs.readdir(__dirname+'/Uploaded/Misc',function(err,files){
-        if(err)
-            {console.log(err);}
-        else
-            {listOfMisc = files;}
-    })    
-}
-function getAudioFileList(){ // function used to get the list of files on server
-    fs.readdir(__dirname+'/Uploaded/Audio',function(err,files){
-        if(err)
-            {console.log(err);}
-        else
-            {listOfAudio = files;}
-    })    
+const supportedFileTypes = [
+  { fileType: "video", fileTypeRegex: /video/ },
+  { fileType: "audio", fileTypeRegex: /audio/ },
+  { fileType: "misc", fileTypeRegex: /application/ },
+  { fileType: "image", fileTypeRegex: /image/ }
+];
+
+supportedFileTypes.forEach(file => {
+  if (!fs.existsSync(__dirname + `/Uploaded/`)) {
+    fs.mkdirSync(__dirname + `/Uploaded/`);
+  }
+  if (!fs.existsSync(__dirname + `/Uploaded/${file.fileType}`)) {
+    console.log(`---${file.fileType} folder does not exist. Creating it.`);
+    fs.mkdirSync(__dirname + `/Uploaded/${file.fileType}`);
+  } else {
+    console.log(`---${file.fileType} folder exists`);
+  }
+});
+
+function getFileList(file) {
+  // function used to get the list of files on server
+  listOfFiles[file.fileType] = fs.readdirSync(
+    __dirname + `/Uploaded/${file.fileType}`
+  );
 }
 
-getVideoFileList();
-getAudioFileList();
-getMiscFileList();
-getImageFileList();
+// get all the files when the app loads
+supportedFileTypes.forEach(getFileList);
 
-app.use('/',express.static(__dirname+'/public'))
-app.listen(3000)
-console.log('Listening');
+app.use("/", express.static(__dirname + "/public"));
+var port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Listening on http://localhost:${port}`));
 
 app.use(expressFileUpload());
 
-app.get('/', function(req,res) {
-    //entrace point "home page"
-    res.sendFile(__dirname+"/index.html");
-    // res.render('index'); 
+app.get("/", function(req, res) {
+  //entrace point "home page"
+  res.sendFile(__dirname + "/index.html");
+  // res.render('index');
 });
 
-app.get('/upload', function(req,res){
-    //res.sendFile(__dirname+'/upload.html');
-    res.render('upload');
-})
+app.get("/upload", function(req, res) {
+  //res.sendFile(__dirname+'/upload.html');
+  res.render("upload");
+});
 
-app.get('/download',function(req,res){
-    //res.sendFile(__dirname+'/download.html')
-    getVideoFileList();
-    getAudioFileList();
-    getMiscFileList();
-    getImageFileList();
-    var data =  { 
-                   video:listOfVideos,
-                   audio:listOfAudio,
-                   image:listOfImages,
-                   misc:listOfMisc
-                };
-    res.render('download', data)
-})
+app.get("/download", function(req, res) {
+  // get all the files when the app loads
+  supportedFileTypes.forEach(getFileList);
+  res.render("download", listOfFiles);
+});
 // image download page render
-app.get('/image',function(req,res){
-    getVideoFileList();
-    getAudioFileList();
-    getMiscFileList();
-    getImageFileList();
-    var data =  { 
-                   video:listOfVideos,
-                   audio:listOfAudio,
-                   image:listOfImages,
-                   misc:listOfMisc
-                };
-    res.render('images', data)
-})
+app.get("/image", function(req, res) {
+  supportedFileTypes.forEach(getFileList);
+  res.render("images", listOfFiles);
+});
 // misc download page render
-app.get('/misc',function(req,res){
-    getVideoFileList();
-    getAudioFileList();
-    getMiscFileList();
-    getImageFileList();
-    var data =  { 
-                   video:listOfVideos,
-                   audio:listOfAudio,
-                   image:listOfImages,
-                   misc:listOfMisc
-                };
-    res.render('misc', data)
-})
+app.get("/misc", function(req, res) {
+  supportedFileTypes.forEach(getFileList);
+  res.render("misc", listOfFiles);
+});
 
-app.get('/audio',function(req,res){
-    getVideoFileList();
-    getAudioFileList();
-    getMiscFileList();
-    getImageFileList();
-    var data =  { 
-                   video:listOfVideos,
-                   audio:listOfAudio,
-                   image:listOfImages,
-                   misc:listOfMisc
-                };
-    res.render('audio', data)
-})
+app.get("/audio", function(req, res) {
+  supportedFileTypes.forEach(getFileList);
 
-//download video files
-app.get('/download/video/:filename',function(req,res){
+  res.render("audio", listOfFiles);
+});
+
+// register routes file downloading the different types of files
+supportedFileTypes.forEach(file => {
+  //download video files
+  app.get(`/download/${file.fileType}/:filename`, function(req, res) {
     // console.log("downloading: " + req.params.filename)
-    res.download(__dirname+"/Uploaded/Video/"+req.params.filename)
-})
-//download audio files
-app.get('/download/audio/:filename',function(req,res){
-    res.download(__dirname+"/Uploaded/Audio/"+req.params.filename)
-})
-//download image files
-app.get('/download/image/:filename',function(req,res){
-    res.download(__dirname+"/Uploaded/Images/"+req.params.filename)
-})
-//download misc files
-app.get('/download/misc/:filename',function(req,res){
-    res.download(__dirname+"/Uploaded/Misc/"+req.params.filename)
-})
+    res.download(
+      __dirname + `/Uploaded/${file.fileType}/` + req.params.filename
+    );
+  });
+});
 
-app.post('/upload',function(req,res){
-    console.log("upload process fired")
-    var nameOfFile;
-    var filetype;
-    var file = req.files.file;
-    nameOfFile = file.name;
-    fileType = file.mimetype;
-    // using Regular Expressions to upload files according to thier file type genre
-    var reVideos = /video/;
-    var reApp = /application/;
-    var reAudio = /audio/;
-    var reImage = /image/;
-    if(reVideos.test(fileType)){
-        console.log("its a video");
-        file.mv("./Uploaded/Video/"+nameOfFile,function(err){
-            if(err){
-                console.log(err); 
-                res.send("An error occured")
-            }
-            else{
-                res.send("Upload Complete")  
-            }
-        })
+app.post("/upload", function(req, res) {
+  console.log("upload process fired");
+  var nameOfFile = req.files.file.name;
+  var fileType = req.files.file.mimetype;
 
+  // using Regular Expressions to upload files according to thier file type genre
+  supportedFileTypes.forEach(file => {
+    if (file.fileTypeRegex.test(fileType)) {
+      console.log(`its a ${file.fileType}`);
+      req.files.file.mv(`./Uploaded/${file.fileType}/` + nameOfFile, function(
+        err
+      ) {
+        if (err) {
+          console.log(err);
+          res.send("An error occured");
+        } else {
+          res.send("Upload Complete");
+        }
+      });
     }
-    if(reApp.test(fileType)){
-        console.log("its misc");
-        file.mv("./Uploaded/Misc/"+nameOfFile,function(err){
-            if(err){
-                console.log(err); 
-                res.send("An error occured")
-            }
-            else{
-                res.send("Upload Complete")  
-            }
-        })
-    }
-    if(reAudio.test(fileType)){
-        console.log("its audio")
-        file.mv("./Uploaded/Audio/"+nameOfFile,function(err){
-            if(err){
-                console.log(err); 
-                res.send("An error occured")
-            }
-            else{
-                res.send("Upload Complete")  
-            }
-        })
-    }
-    if(reImage.test(fileType)){
-        console.log("its an image")
-        file.mv("./Uploaded/Images/"+nameOfFile,function(err){
-            if(err){
-                console.log(err); 
-                res.send("An error occured")
-            }
-            else{
-                res.send("Upload Complete")  
-            }
-        })
-    }
-
-    // file.mv("./Uploaded/"+nameOfFile,function(err){
-    //     if(err){
-    //         console.log(err); 
-    //         res.send("An error occured")
-    //     }
-    //     else{
-    //         res.send("Upload Complete")  
-    //     }
-    // })
-})
-
+  });
+});

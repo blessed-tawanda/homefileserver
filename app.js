@@ -4,7 +4,7 @@ var expressFileUpload = require("express-fileupload");
 var fs = require("fs");
 var ejs = require("ejs");
 var app = express();
-
+const decimal = require('decimal.js')
 app.set("view engine", "ejs");
 
 const listOfFiles = {
@@ -13,8 +13,21 @@ const listOfFiles = {
   misc: [],
   image: []
 };
-// using Regular Expressions to upload files according to thier file type genre
 
+function calculateFileSize(sizeInByte) {
+  if(sizeInByte < 1024) {
+    var sizeInKb = new decimal(sizeInByte / 1024)
+    return `${sizeInMb.toFixed(2)}kb`
+  } else if(sizeInByte >= 1024 && sizeInByte < 1073741824) {
+    var sizeInMb = new decimal(sizeInByte / 1048576)
+    return `${sizeInMb.toFixed(2)}mb`
+  } else if(sizeInByte > 1073741824) {
+    var sizeInGb = new decimal((sizeInByte / (1024*1024*1024*1024)))
+    return `${sizeInGb.toFixed(2)}gb`
+  }
+}
+
+// using Regular Expressions to upload files according to thier file type genre
 const supportedFileTypes = [
   { fileType: "video", fileTypeRegex: /video/ },
   { fileType: "audio", fileTypeRegex: /audio/ },
@@ -64,7 +77,7 @@ app.get("/upload", function(req, res) {
 app.get("/download", function(req, res) {
   // get all the files when the app loads
   supportedFileTypes.forEach(getFileList);
-  res.render("download", listOfFiles);
+  res.render("download", {listOfFiles});
 });
 // image download page render
 app.get("/image", function(req, res) {
@@ -79,7 +92,6 @@ app.get("/misc", function(req, res) {
 
 app.get("/audio", function(req, res) {
   supportedFileTypes.forEach(getFileList);
-
   res.render("audio", listOfFiles);
 });
 
@@ -99,6 +111,7 @@ app.post("/upload", function(req, res) {
   var nameOfFile = req.files.file.name;
   var fileType = req.files.file.mimetype;
 
+  console.log(`Adding ${nameOfFile} ${calculateFileSize(req.files.file.data.length)}`)
   // using Regular Expressions to upload files according to thier file type genre
   supportedFileTypes.forEach(file => {
     if (file.fileTypeRegex.test(fileType)) {

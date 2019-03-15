@@ -42,8 +42,6 @@ supportedFileTypes.forEach(file => {
   if (!fs.existsSync(__dirname + `/Uploaded/${file.fileType}`)) {
     console.log(`---${file.fileType} folder does not exist. Creating it.`);
     fs.mkdirSync(__dirname + `/Uploaded/${file.fileType}`);
-  } else {
-    console.log(`---${file.fileType} folder exists`);
   }
 });
 

@@ -1,12 +1,13 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var expressFileUpload = require("express-fileupload");
+var morgan = require('morgan')
 var fs = require("fs");
 var ejs = require("ejs");
 var app = express();
 const decimal = require('decimal.js')
 app.set("view engine", "ejs");
-
+app.use(morgan('tiny'))
 const listOfFiles = {
   video: [],
   audio: [],
@@ -75,7 +76,7 @@ app.get("/upload", function(req, res) {
 app.get("/download", function(req, res) {
   // get all the files when the app loads
   supportedFileTypes.forEach(getFileList);
-  res.render("download", {listOfFiles});
+  res.render("download", listOfFiles);
 });
 // image download page render
 app.get("/image", function(req, res) {
